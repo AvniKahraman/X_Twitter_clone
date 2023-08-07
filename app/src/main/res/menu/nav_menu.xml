@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn = "navigation_view">
+
+
+    <group
+        android:checkableBehavior="single">
+
+    <item android:id="@+id/nav_profile"
+        android:icon="@drawable/baseline_person_24"
+        android:title="Profile"></item>
+
+        <item android:id="@+id/nav_Blue"
+            android:icon="@drawable/baseline_verified_user_24"
+            android:title="Blue"></item>
+
+        <item android:id="@+id/nav_BookMark"
+            android:icon="@drawable/baseline_bookmark_border_24"
+            android:title="Book Mark"></item>
+
+        <item android:id="@+id/nav_List"
+            android:icon="@drawable/baseline_list_alt_24"
+            android:title="List"></item>
+
+    </group>
+
+    <group
+        android:checkableBehavior="single">
+
+        <item android:id="@+id/professional"
+            android:title="Professional">
+            <menu>
+                <item
+                    android:id="@+id/nav_forprofessional"
+                    android:icon="@drawable/baseline_rocket_launch_24"
+                    android:title="For Professional" />
+
+            </menu>
+
+
+        </item>
+
+        <item android:id="@+id/nav_settingsandsupport"
+            android:title="Settings and support">
+
+            <menu>
+                <item
+                    android:id="@+id/nav_Settings"
+                    android:icon="@drawable/baseline_settings_24"
+                    android:title="Settings" />
+
+                <item
+                        android:id="@+id/nav_helpcenter"
+                    android:icon="@drawable/baseline_question_mark_24"
+                    android:title="Help center" />
+
+            </menu>
+
+
+
+        </item>
+
+    </group>
+
+</menu>
