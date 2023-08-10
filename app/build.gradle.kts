@@ -3,11 +3,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.xtwitter"
+    namespace = "com.example.x"
     compileSdk = 33
 
     defaultConfig {
-        applicationId = "com.example.xtwitter"
+        applicationId = "com.example.x"
         minSdk = 25
         targetSdk = 33
         versionCode = 1

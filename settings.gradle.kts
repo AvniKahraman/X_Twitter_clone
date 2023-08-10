@@ -13,6 +13,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "X(Twitter)"
+rootProject.name = "X"
 include(":app")
  
