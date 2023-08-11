@@ -1,5 +1,6 @@
 package com.example.x;
 
+import android.hardware.camera2.CameraManager;
 import android.os.Bundle;
 import android.view.MenuItem;
 
@@ -9,69 +10,110 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-    private DrawerLayout drawerLayout;
 
-    private static final int NAV_PROFILE = R.id.nav_profile;
-    private static final int NAV_BLUE = R.id.nav_blue;
-    private static final int NAV_BOOKMARK = R.id.nav_bookmark;
-    private static final int NAV_LIST = R.id.nav_list;
-    private static final int NAV_FOR_PROFESSIONAL = R.id.nav_forprofessional;
-    private static final int NAV_SETTINGS = R.id.nav_Settings;
-    private static final int NAV_HELP_CENTER = R.id.nav_helpcenter;
+    DrawerLayout drawerLayout;
+    BottomNavigationView bottomNavigationView;
+    FragmentManager fragmentManager;
+    Toolbar toolbar;
+    FloatingActionButton fab;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         drawerLayout = findViewById(R.id.drawer_layout);
-        NavigationView navigationView = findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,drawerLayout,toolbar,R.string.navigation_drawer_open,
+                R.string.navigation_drawer_close);
 
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar,
-                R.string.open_nav, R.string.close_nav);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
-        if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ProfileFragment()).commit();
-            navigationView.setCheckedItem(R.id.nav_profile);
-        }
-    }
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+
+        bottomNavigationView=findViewById(R.id.bottom_navigation);
+        bottomNavigationView.setBackground(null);
+
+        bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                int itemId = item.getItemId();
+                if (itemId== R.id.nav_home )
+                {
+                    openFragment(new HomeFragment());
+                    return true;
+
+                } else if (itemId == R.id.nav_search) {
+                    openFragment(new SearchFragment());
+                    return true;
+
+                } else if (itemId==  R.id.nav_notification) {
+                    openFragment(new NotificationFragment());
+                    return  true;
+
+                }else if (itemId == R.id.nav_message){
+                    openFragment(new MessageFragment());
+                    return true;
+                }
+
+
+                return false;
+            }
+        });
+        fragmentManager = getSupportFragmentManager();
+        openFragment(new HomeFragment());
+
+}
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.nav_profile:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ProfileFragment()).commit();
-                break;
-            case R.id.nav_blue:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new BlueFragment()).commit();
-                break;
-            case R.id.nav_bookmark:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new BookmarkFragment()).commit();
-                break;
-            case R.id.nav_list:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ListFragment()).commit();
-                break;
-            case R.id.nav_forprofessional:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ForProfessionalFragment()).commit();
-                break;
-            case R.id.nav_Settings:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new SettingsFragment()).commit();
-                break;
-            case R.id.nav_helpcenter:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HelpCenterFragment()).commit();
-                break;
-        }
+       int itemId = item.getItemId();
+       if(itemId == R.id.bottom_profile){
+            openFragment(new ProfileFragment());
+       } else if (itemId == R.id.bottom_blue) {
+           openFragment(new BlueFragment());
+           
+       } else if (itemId == R.id.bottom_bookmark) {
+        openFragment(new BookmarkFragment());
+       } else if (itemId == R.id.bottom_list) {
+           openFragment(new ListFragment());
+       }
         drawerLayout.closeDrawer(GravityCompat.START);
+
         return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (drawerLayout.isDrawerOpen(GravityCompat.START))
+        {
+            drawerLayout.closeDrawer(GravityCompat.START);
+        }else {
+            super.onBackPressed();
+        }
+
+    }
+
+    private  void openFragment(Fragment fragment)
+    {
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.replace(R.id.fragment_container,fragment);
+        transaction.commit();
     }
 }

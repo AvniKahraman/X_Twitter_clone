@@ -1,48 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="176dp"
-    android:gravity="bottom"
-    android:orientation="vertical"
-    android:padding="16dp">
+    android:gravity="top"
+    android:padding="16dp"
+    android:background="@color/white"
+    android:theme="@style/ThemeOverlay.AppCompat.Light">
 
     <ImageView
         android:id="@+id/profilePhoto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/aklogo" />
+        android:src="@drawable/aklogo"/>
 
     <TextView
         android:id="@+id/name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="DENEME"
-        android:textSize="16dp"
-        android:textStyle="bold" />
-
+        android:textStyle="bold"
+        android:textSize="16dp"/>
     <TextView
-        android:id="@+id/nametag"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:id="@+id/nametag"
         android:text="AvniKahraman"
-        android:textSize="16dp" />
-
+        android:textSize="16dp"/>
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
         <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:id="@+id/takip"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="1234 Takip edilen" />
-
+            android:text="1234 Takip edilen"/>
         <TextView
-            android:id="@+id/takipci"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:text="34 Takipçi" />
+            android:text="34 Takipçi"
+            android:id="@+id/takipci"
+            android:layout_marginLeft="10dp"/>
     </LinearLayout>
 </LinearLayout>
