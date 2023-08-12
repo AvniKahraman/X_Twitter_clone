@@ -1,10 +1,14 @@
 package com.example.x;
 
+import android.content.Context;
 import android.hardware.camera2.CameraManager;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.View;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -33,6 +37,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayShowCustomEnabled(true);
+            LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            View view = inflater.inflate(R.layout.costom_image, null);
+            actionBar.setCustomView(view);
+        }
 
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -63,6 +75,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     openFragment(new SearchFragment());
                     return true;
 
+                } else if (itemId == R.id.nav_comm) {
+
+                    openFragment(new CommunityFragment());
+                    return true;
+
+
                 } else if (itemId==  R.id.nav_notification) {
                     openFragment(new NotificationFragment());
                     return  true;
@@ -88,7 +106,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             openFragment(new ProfileFragment());
        } else if (itemId == R.id.bottom_blue) {
            openFragment(new BlueFragment());
-           
+
        } else if (itemId == R.id.bottom_bookmark) {
         openFragment(new BookmarkFragment());
        } else if (itemId == R.id.bottom_list) {

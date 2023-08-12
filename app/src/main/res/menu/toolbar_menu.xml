@@ -1,0 +1,8 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/cis_toolbar"
+        android:title="x"
+        app:showAsAction="always"
+        android:actionLayout="@layout/costom_image" />
+</menu>
