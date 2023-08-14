@@ -1,11 +1,14 @@
 package com.example.x;
 
 import android.content.Context;
+import android.content.Intent;
 import android.hardware.camera2.CameraManager;
+import android.media.Image;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
@@ -17,11 +20,13 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.tabs.TabLayout;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -32,19 +37,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     FloatingActionButton fab;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
+        setSupportActionBar(findViewById(R.id.toolbar));
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
-            actionBar.setDisplayShowCustomEnabled(true);
-            LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            View view = inflater.inflate(R.layout.costom_image, null);
-            actionBar.setCustomView(view);
+            actionBar.setDisplayShowTitleEnabled(false); // Hide default title
+            actionBar.setDisplayHomeAsUpEnabled(true); // Show back button if needed
         }
+
 
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -68,7 +73,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 int itemId = item.getItemId();
                 if (itemId== R.id.nav_home )
                 {
-                    openFragment(new HomeFragment());
+                    openFragment(new ForyouFragment());
                     return true;
 
                 } else if (itemId == R.id.nav_search) {
@@ -95,7 +100,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         });
         fragmentManager = getSupportFragmentManager();
-        openFragment(new HomeFragment());
+
+
+
+        ViewPager viewPager = findViewById(R.id.viewPager);
+        FragmentsAdapter fragmentsAdapter = new FragmentsAdapter(getSupportFragmentManager());
+        viewPager.setAdapter(fragmentsAdapter);
+
+        TabLayout tabLayout = findViewById(R.id.tabLayout);
+        tabLayout.setupWithViewPager(viewPager);
 
 }
 
@@ -111,6 +124,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         openFragment(new BookmarkFragment());
        } else if (itemId == R.id.bottom_list) {
            openFragment(new ListFragment());
+       }else if (itemId == R.id.profilePhoto){
+           openFragment(new ProfileFragment());
        }
         drawerLayout.closeDrawer(GravityCompat.START);
 
@@ -133,5 +148,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.replace(R.id.fragment_container,fragment);
         transaction.commit();
+    }
+
+    public void onProfilePhotoClick(View view) {
+        openFragment(new ProfileFragment());
+        drawerLayout.closeDrawer(GravityCompat.START);
     }
 }

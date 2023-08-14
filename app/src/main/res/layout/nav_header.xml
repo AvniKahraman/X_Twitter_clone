@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="176dp"
@@ -9,11 +9,15 @@
     android:background="@color/white"
     android:theme="@style/ThemeOverlay.AppCompat.Light">
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/profilePhoto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/aklogo"/>
+        android:layout_centerHorizontal="true"
+        app:civ_border_color="#FF000000"
+        android:src="@drawable/aklogo"
+        android:clickable="true"
+        android:onClick="onProfilePhotoClick"/>
 
     <TextView
         android:id="@+id/name"
@@ -21,13 +25,15 @@
         android:layout_height="wrap_content"
         android:text="DENEME"
         android:textStyle="bold"
-        android:textSize="16dp"/>
+        android:textSize="16dp"
+        android:layout_marginTop="5dp"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/nametag"
         android:text="AvniKahraman"
-        android:textSize="16dp"/>
+        android:textSize="16dp"
+        android:layout_marginTop="5dp"/>
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -37,7 +43,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/takip"
-            android:text="1234 Takip edilen"/>
+            android:text="1234 Takip edilen" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
