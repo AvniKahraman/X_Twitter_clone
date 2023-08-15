@@ -1,157 +1,220 @@
 package com.example.x;
 
-import android.content.Context;
-import android.content.Intent;
-import android.hardware.camera2.CameraManager;
-import android.media.Image;
-import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.ImageView;
+    import android.content.Context;
+    import android.content.Intent;
+    import android.hardware.camera2.CameraManager;
+    import android.media.Image;
+    import android.os.Bundle;
+    import android.view.LayoutInflater;
+    import android.view.MenuItem;
+    import android.view.View;
+    import android.widget.ImageView;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.viewpager.widget.ViewPager;
+    import androidx.annotation.NonNull;
+    import androidx.appcompat.app.ActionBar;
+    import androidx.appcompat.app.ActionBarDrawerToggle;
+    import androidx.appcompat.app.AppCompatActivity;
+    import androidx.appcompat.widget.Toolbar;
+    import androidx.core.view.GravityCompat;
+    import androidx.drawerlayout.widget.DrawerLayout;
+    import androidx.fragment.app.Fragment;
+    import androidx.fragment.app.FragmentManager;
+    import androidx.fragment.app.FragmentTransaction;
+    import androidx.viewpager.widget.ViewPager;
 
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.navigation.NavigationBarView;
-import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.tabs.TabLayout;
+    import com.google.android.material.bottomnavigation.BottomNavigationView;
+    import com.google.android.material.floatingactionbutton.FloatingActionButton;
+    import com.google.android.material.navigation.NavigationBarView;
+    import com.google.android.material.navigation.NavigationView;
+    import com.google.android.material.tabs.TabLayout;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+    public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    DrawerLayout drawerLayout;
-    BottomNavigationView bottomNavigationView;
-    FragmentManager fragmentManager;
-    Toolbar toolbar;
-    FloatingActionButton fab;
+        DrawerLayout drawerLayout;
+        BottomNavigationView bottomNavigationView;
+        FragmentManager fragmentManager;
+        Toolbar toolbar;
+        FloatingActionButton fab;
 
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        ViewPager viewPager;
+        TabLayout tabLayout;
 
 
-        setSupportActionBar(findViewById(R.id.toolbar));
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setDisplayShowTitleEnabled(false); // Hide default title
-            actionBar.setDisplayHomeAsUpEnabled(true); // Show back button if needed
-        }
 
 
-        toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        @Override
+        protected void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            setContentView(R.layout.activity_main);
 
-        drawerLayout = findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,drawerLayout,toolbar,R.string.navigation_drawer_open,
-                R.string.navigation_drawer_close);
+            viewPager = findViewById(R.id.viewPager);
+            tabLayout = findViewById(R.id.tabLayout);
 
-        drawerLayout.addDrawerListener(toggle);
-        toggle.syncState();
-
-        NavigationView navigationView = findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
-
-        bottomNavigationView=findViewById(R.id.bottom_navigation);
-        bottomNavigationView.setBackground(null);
-
-        bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                int itemId = item.getItemId();
-                if (itemId== R.id.nav_home )
-                {
-                    openFragment(new ForyouFragment());
-                    return true;
-
-                } else if (itemId == R.id.nav_search) {
-                    openFragment(new SearchFragment());
-                    return true;
-
-                } else if (itemId == R.id.nav_comm) {
-
-                    openFragment(new CommunityFragment());
-                    return true;
+            setSupportActionBar(findViewById(R.id.toolbar));
+            ActionBar actionBar = getSupportActionBar();
+            if (actionBar != null) {
+                actionBar.setDisplayShowTitleEnabled(false); // Hide default title
+                actionBar.setDisplayHomeAsUpEnabled(true); // Show back button if needed
+            }
 
 
-                } else if (itemId==  R.id.nav_notification) {
-                    openFragment(new NotificationFragment());
-                    return  true;
+            toolbar = findViewById(R.id.toolbar);
+            setSupportActionBar(toolbar);
 
-                }else if (itemId == R.id.nav_message){
-                    openFragment(new MessageFragment());
-                    return true;
+            drawerLayout = findViewById(R.id.drawer_layout);
+            ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,drawerLayout,toolbar,R.string.navigation_drawer_open,
+                    R.string.navigation_drawer_close);
+
+            drawerLayout.addDrawerListener(toggle);
+            toggle.syncState();
+
+            NavigationView navigationView = findViewById(R.id.nav_view);
+            navigationView.setNavigationItemSelectedListener(this);
+
+            bottomNavigationView=findViewById(R.id.bottom_navigation);
+            bottomNavigationView.setBackground(null);
+
+            bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
+                @Override
+                public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                    int itemId = item.getItemId();
+                    if (itemId== R.id.nav_home )
+                    {
+                        openFragment(new HomeFragment());
+                        tabLayout.setVisibility(View.VISIBLE);
+                        bottomNavigationView.setVisibility(View.VISIBLE);
+                        viewPager.setVisibility(View.VISIBLE);
+
+                        return true;
+
+                    } else if (itemId == R.id.nav_search) {
+                        openFragment(new SearchFragment());
+                        tabLayout.setVisibility(View.GONE);
+                        viewPager.setVisibility(View.GONE);
+
+                        return true;
+
+                    } else if (itemId == R.id.nav_comm) {
+
+                        openFragment(new CommunityFragment());
+                        tabLayout.setVisibility(View.GONE);
+                        viewPager.setVisibility(View.GONE);
+
+                        return true;
+
+
+                    } else if (itemId==  R.id.nav_notification) {
+                        openFragment(new NotificationFragment());
+                        tabLayout.setVisibility(View.GONE);
+                        viewPager.setVisibility(View.GONE);
+
+                        return  true;
+
+                    }else if (itemId == R.id.nav_message){
+                        openFragment(new MessageFragment());
+                        tabLayout.setVisibility(View.GONE);
+                        viewPager.setVisibility(View.GONE);
+
+                        return true;
+                    }
+
+
+                    return false;
+                }
+            });
+            fragmentManager = getSupportFragmentManager();
+            openFragment(new HomeFragment());
+
+
+
+            FragmentsAdapter fragmentsAdapter = new FragmentsAdapter(getSupportFragmentManager());
+            viewPager.setAdapter(fragmentsAdapter);
+
+            tabLayout.setupWithViewPager(viewPager);
+
+         /*  viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+                @Override
+                public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
                 }
 
+                @Override
+                public void onPageSelected(int position) {
 
-                return false;
-            }
-        });
-        fragmentManager = getSupportFragmentManager();
+                    if (position == 0) {
+                        tabLayout.setVisibility(View.VISIBLE);
+                        bottomNavigationView.setVisibility(View.VISIBLE);
+                    } else {
+                        tabLayout.setVisibility(View.GONE);
+                        bottomNavigationView.setVisibility(View.GONE);
+                    }
 
+                    // Ana sayfa ve Following fragmentleri için tabLayout'un ve bottomNavigationView'un görünürlüğünü ayarla
+                    if (position == 0) {
+                        tabLayout.setVisibility(View.VISIBLE);
+                        bottomNavigationView.setVisibility(View.VISIBLE);
+                    } else {
+                        tabLayout.setVisibility(View.GONE);
+                        bottomNavigationView.setVisibility(View.GONE);
+                    }
+                }
 
+                @Override
+                public void onPageScrollStateChanged(int state) {
 
-        ViewPager viewPager = findViewById(R.id.viewPager);
-        FragmentsAdapter fragmentsAdapter = new FragmentsAdapter(getSupportFragmentManager());
-        viewPager.setAdapter(fragmentsAdapter);
+                }
+            });*/
 
-        TabLayout tabLayout = findViewById(R.id.tabLayout);
-        tabLayout.setupWithViewPager(viewPager);
-
-}
-
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-       int itemId = item.getItemId();
-       if(itemId == R.id.bottom_profile){
-            openFragment(new ProfileFragment());
-       } else if (itemId == R.id.bottom_blue) {
-           openFragment(new BlueFragment());
-
-       } else if (itemId == R.id.bottom_bookmark) {
-        openFragment(new BookmarkFragment());
-       } else if (itemId == R.id.bottom_list) {
-           openFragment(new ListFragment());
-       }else if (itemId == R.id.profilePhoto){
-           openFragment(new ProfileFragment());
-       }
-        drawerLayout.closeDrawer(GravityCompat.START);
-
-        return true;
     }
 
-    @Override
-    public void onBackPressed() {
-        if (drawerLayout.isDrawerOpen(GravityCompat.START))
-        {
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+           int itemId = item.getItemId();
+           if(itemId == R.id.bottom_profile){
+                openFragment(new ProfileFragment());
+               tabLayout.setVisibility(View.GONE);
+               viewPager.setVisibility(View.GONE);
+
+
+           } else if (itemId == R.id.bottom_blue) {
+               openFragment(new BlueFragment());
+               tabLayout.setVisibility(View.GONE);
+
+           } else if (itemId == R.id.bottom_bookmark) {
+            openFragment(new BookmarkFragment());
+               tabLayout.setVisibility(View.GONE);
+           } else if (itemId == R.id.bottom_list) {
+               openFragment(new ListFragment());
+               tabLayout.setVisibility(View.GONE);
+           }else if (itemId == R.id.profilePhoto){
+               openFragment(new ProfileFragment());
+               tabLayout.setVisibility(View.GONE);
+           }
             drawerLayout.closeDrawer(GravityCompat.START);
-        }else {
-            super.onBackPressed();
+
+            return true;
         }
 
-    }
+        @Override
+        public void onBackPressed() {
+            if (drawerLayout.isDrawerOpen(GravityCompat.START))
+            {
+                drawerLayout.closeDrawer(GravityCompat.START);
+            }else {
+                super.onBackPressed();
+            }
 
-    private  void openFragment(Fragment fragment)
-    {
-        FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.replace(R.id.fragment_container,fragment);
-        transaction.commit();
-    }
+        }
 
-    public void onProfilePhotoClick(View view) {
-        openFragment(new ProfileFragment());
-        drawerLayout.closeDrawer(GravityCompat.START);
+        private  void openFragment(Fragment fragment)
+        {
+            FragmentTransaction transaction = fragmentManager.beginTransaction();
+            transaction.replace(R.id.fragment_container,fragment);
+            transaction.commit();
+        }
+
+        public void onProfilePhotoClick(View view) {
+            openFragment(new ProfileFragment());
+            drawerLayout.closeDrawer(GravityCompat.START);
+        }
     }
-}

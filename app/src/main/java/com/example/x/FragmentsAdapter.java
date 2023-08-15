@@ -32,6 +32,6 @@ public class FragmentsAdapter extends FragmentPagerAdapter {
         } else if (position == 1) {
             return "Following";
         }
-        return super.getPageTitle(position);
+        return null;
     }
 }
