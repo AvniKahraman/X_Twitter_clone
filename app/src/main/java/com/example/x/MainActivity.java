@@ -188,6 +188,7 @@ package com.example.x;
                tabLayout.setVisibility(View.GONE);
            }else if (itemId == R.id.profilePhoto){
                openFragment(new ProfileFragment());
+               viewPager.setVisibility(View.GONE);
                tabLayout.setVisibility(View.GONE);
            }
             drawerLayout.closeDrawer(GravityCompat.START);
@@ -216,5 +217,7 @@ package com.example.x;
         public void onProfilePhotoClick(View view) {
             openFragment(new ProfileFragment());
             drawerLayout.closeDrawer(GravityCompat.START);
+            tabLayout.setVisibility(View.GONE);
+            viewPager.setVisibility(View.GONE);
         }
     }
